@@ -26,7 +26,11 @@ const PackageDetails = () => {
       <Navbar />
       <main className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-4">{packageData.title}</h1>
-        <img src={packageData.image} alt={packageData.title} className="w-full h-96 object-cover mb-4" />
+        <img
+          src={packageData.image}
+          alt={packageData.title}
+          className="w-full h-96 object-cover mb-4"
+        />
         <p className="mb-4">{packageData.description}</p>
         <p className="text-lg font-bold">Price: ${packageData.price} per person</p>
         <p className="text-lg">Available Dates: {packageData.availableDates.join(", ")}</p>

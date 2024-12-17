@@ -1,91 +1,59 @@
-import { useState } from "react";
-import { submitBooking } from "../utils/api";
+import React from "react";
 
-const BookingForm = ({ packageId, price }: { packageId: string; price: number }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    travelers: 1,
-    specialRequests: "",
-  });
+interface BookingFormProps {
+  packageId: string;
+  price: number;
+  onClose?: () => void; // Optional close handler
+}
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+const BookingForm: React.FC<BookingFormProps> = ({ packageId, price, onClose }) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      const totalPrice = price * parseInt(formData.travelers.toString());
-      await submitBooking({ ...formData, packageId, totalPrice });
-      setIsSubmitted(true);
-    } catch (error) {
-      console.error("Error submitting booking:", error);
-    }
+    // Form submission logic here
+    console.log(`Booking confirmed for package ID: ${packageId} at $${price}`);
+    if (onClose) onClose(); // Close modal if onClose is provided
   };
-
-  if (isSubmitted) {
-    return <div className="text-green-600">Booking successful! Thank you for choosing us.</div>;
-  }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        placeholder="Name"
-        required
-        className="w-full border rounded px-4 py-2"
-      />
-      <input
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Email"
-        required
-        className="w-full border rounded px-4 py-2"
-      />
-      <input
-        type="tel"
-        name="phone"
-        value={formData.phone}
-        onChange={handleChange}
-        placeholder="Phone Number"
-        required
-        className="w-full border rounded px-4 py-2"
-      />
-      <input
-        type="number"
-        name="travelers"
-        value={formData.travelers}
-        onChange={handleChange}
-        placeholder="Number of Travelers"
-        required
-        className="w-full border rounded px-4 py-2"
-        min="1"
-      />
-      <textarea
-        name="specialRequests"
-        value={formData.specialRequests}
-        onChange={handleChange}
-        placeholder="Special Requests (Optional)"
-        className="w-full border rounded px-4 py-2"
-      ></textarea>
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Book Now
-      </button>
-    </form>
+    <div className="p-6 bg-white rounded shadow">
+      <h2 className="text-2xl font-bold mb-4">Book Your Package</h2>
+      <p className="mb-2">Package ID: {packageId}</p>
+      <p className="mb-4 text-green-500 font-semibold">Price: ${price}</p>
+      <form onSubmit={handleFormSubmit}>
+        <label className="block mb-2">
+          <span className="text-gray-700">Full Name</span>
+          <input
+            type="text"
+            className="w-full p-2 border rounded mt-1"
+            required
+            placeholder="Enter your full name"
+          />
+        </label>
+        <label className="block mb-4">
+          <span className="text-gray-700">Email</span>
+          <input
+            type="email"
+            className="w-full p-2 border rounded mt-1"
+            required
+            placeholder="Enter your email"
+          />
+        </label>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+        >
+          Confirm Booking
+        </button>
+      </form>
+      {onClose && (
+        <button
+          className="mt-4 w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-600"
+          onClick={onClose}
+        >
+          Cancel
+        </button>
+      )}
+    </div>
   );
 };
 

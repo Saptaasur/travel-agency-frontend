@@ -3,7 +3,11 @@ import Link from "next/link";
 import { Package } from "../types";
 import BookingForm from "./BookingForm";
 
-const PackageCard = ({ packageData }: { packageData: Package }) => {
+interface PackageCardProps {
+  packageData: Package;
+}
+
+const PackageCard: React.FC<PackageCardProps> = ({ packageData }) => {
   const [isBooking, setIsBooking] = useState(false);
 
   const handleOpenBooking = () => setIsBooking(true);
@@ -32,7 +36,8 @@ const PackageCard = ({ packageData }: { packageData: Package }) => {
         </p>
         {/* Buttons */}
         <div className="flex space-x-4 mt-6">
-          <Link href={`/package/${packageData._id}`} passHref>
+          {/* View Details Button */}
+          <Link href={`/packages/${packageData._id}`} passHref>
             <button
               className="w-2/3 bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded shadow hover:from-blue-600 hover:to-blue-800 focus:ring focus:ring-blue-300 transition duration-200"
               aria-label={`View details of ${packageData.title}`}
@@ -40,6 +45,7 @@ const PackageCard = ({ packageData }: { packageData: Package }) => {
               View Details
             </button>
           </Link>
+          {/* Book Now Button */}
           <button
             onClick={handleOpenBooking}
             className="w-1/2 bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded shadow hover:from-green-600 hover:to-green-800 focus:ring focus:ring-green-300 transition duration-200"
@@ -53,7 +59,11 @@ const PackageCard = ({ packageData }: { packageData: Package }) => {
       {isBooking && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
           <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md">
-            <BookingForm packageData={packageData} onClose={handleCloseBooking} />
+            <BookingForm
+              packageId={packageData._id}
+              price={packageData.price}
+              onClose={handleCloseBooking}
+            />
             <button
               onClick={handleCloseBooking}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
