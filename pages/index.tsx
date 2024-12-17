@@ -8,7 +8,7 @@ const Home = () => {
   const [packages, setPackages] = useState<Package[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/packages")
+    fetch("https://travel-backend-k4u2.onrender.com/api/packages")
       .then((res) => res.json())
       .then((data) => setPackages(data))
       .catch((error) => console.error("Error fetching packages:", error));

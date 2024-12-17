@@ -1,18 +1,18 @@
 export const fetchPackages = async () => {
-    const response = await fetch("/api/packages");
+    const response = await fetch("https://travel-backend-k4u2.onrender.com/api/packages");
     if (!response.ok) throw new Error("Failed to fetch packages");
     return response.json();
   };
   
   export const fetchPackageById = async (id: string) => {
-    const response = await fetch(`/api/packages/${id}`);
+    const response = await fetch(`https://travel-backend-k4u2.onrender.com/api/packages/${id}`);
     if (!response.ok) throw new Error("Failed to fetch package details");
     return response.json();
   };
   
   export const submitBooking = async (bookingData: any) => {
     try {
-      const response = await fetch("http://localhost:5000/api/bookings", {
+      const response = await fetch("https://travel-backend-k4u2.onrender.com/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bookingData),

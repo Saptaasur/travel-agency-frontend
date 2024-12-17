@@ -21,7 +21,7 @@ const AdminDashboard = () => {
 
   const fetchPackages = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/packages");
+      const res = await fetch("https://travel-backend-k4u2.onrender.com/api/packages");
       const data = await res.json();
       setPackages(data);
     } catch (error) {
@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
   const fetchBookings = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/bookings");
+      const res = await fetch("https://travel-backend-k4u2.onrender.com/api/bookings");
       const data = await res.json();
       
       // Ensure data is an array before setting state
@@ -57,7 +57,7 @@ const AdminDashboard = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/packages", {
+      const res = await fetch("https://travel-backend-k4u2.onrender.com/api/packages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -84,7 +84,7 @@ const AdminDashboard = () => {
   // Delete a package
   const handleDeletePackage = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/packages/${id}`, {
+      const res = await fetch(`https://travel-backend-k4u2.onrender.com/api/packages/${id}`, {
         method: "DELETE",
       });
 

@@ -12,7 +12,7 @@ const PackageDetails = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:5000/api/packages/${id}`)
+      fetch(`https://travel-backend-k4u2.onrender.com/api/packages/${id}`)
         .then((res) => res.json())
         .then((data) => setPackageData(data))
         .catch((error) => console.error("Error fetching package:", error));
